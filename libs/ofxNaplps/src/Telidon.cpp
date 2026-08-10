@@ -35,7 +35,7 @@ TelidonDrawCmd::TelidonDrawCmd(const NapCmd & _cmd, float _w, float _h, std::sha
     extraLoopCounter = 0;
     finished = false;
 
-    if (!progressiveDraw) reset();
+    reset();
 }
 
 void TelidonDrawCmd::reset() {

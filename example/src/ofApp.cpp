@@ -58,9 +58,6 @@ void ofApp::draw() {
     telidon.draw();
     ofPopMatrix();
 
-    // TEMP SNAPSHOT
-    if (telidon.isFinished() || ofGetFrameNum() > 1200) { ofSaveScreen("snapshot.png"); ofExit(); }
-
     if (showInfo) {
         std::string info = naplps.fileName + "\n";
         info += "Telidon " + ofToString(naplps.version) + ", " + ofToString(naplps.cmds.size()) + " commands\n";
