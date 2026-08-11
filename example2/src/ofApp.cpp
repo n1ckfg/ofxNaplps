@@ -2,28 +2,30 @@
 
 //--------------------------------------------------------------
 void ofApp::setup() {
-    ofSetWindowTitle("ofxNaplps");
-    ofSetFrameRate(60);
-    //ofSetVerticalSync(true);
-    //ofEnableAntiAliasing();
-    //ofEnableAlphaBlending();
-    ofBackground(0);
-
-    // the other sample files in bin/data, cycled through with the arrow keys
-    samples.push_back("shark.nap");
-    samples.push_back("santa.nap");
-    samples.push_back("beer.nap");
-    samples.push_back("haunt.nap");
-    samples.push_back("wast.nap");
-    samples.push_back("email2.nap");
-    sampleIndex = 0;
-
-    progressiveDraw = true;
-    labelPoints = false;
-    showInfo = false;
-
-    updateLayout();
-    loadNap(samples[sampleIndex]);
+	ofSetWindowTitle("ofxNaplps");
+	ofSetFrameRate(60);
+	//ofSetVerticalSync(true);
+	//ofEnableAntiAliasing();
+	//ofEnableAlphaBlending();
+	ofBackground(0);
+	
+	// the other sample files in bin/data, cycled through with the arrow keys
+	samples.push_back("shark.nap");
+	samples.push_back("santa.nap");
+	samples.push_back("beer.nap");
+	samples.push_back("haunt.nap");
+	samples.push_back("wast.nap");
+	samples.push_back("email2.nap");
+	sampleIndex = 0;
+	
+	progressiveDraw = true;
+	labelPoints = false;
+	showInfo = false;
+	
+	updateLayout();
+	loadNap(samples[sampleIndex]);
+	
+	fbo.allocate(720, 540, GL_RGBA);
 }
 
 //--------------------------------------------------------------
@@ -40,8 +42,8 @@ void ofApp::loadNap(const std::string & filePath) {
 
 //--------------------------------------------------------------
 void ofApp::updateLayout() {
-	drawSize = ofGetWidth(); //MIN(ofGetWidth(), ofGetHeight());
-	drawOffset = glm::vec2(0, ofGetHeight() - ofGetWidth()); //glm::vec2((ofGetWidth() - drawSize) / 2.0f, (ofGetHeight() - drawSize) / 2.0f);
+	drawSize = 720;
+	drawOffset = glm::vec2(0, 540 - 720);
 }
 
 //--------------------------------------------------------------
@@ -51,13 +53,17 @@ void ofApp::update() {
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-    ofBackground(0);
+	fbo.begin();
+	ofBackground(0);
 
     ofPushMatrix();
     ofTranslate(drawOffset.x, drawOffset.y);
     telidon.draw();
     ofPopMatrix();
-
+	fbo.end();
+	
+	fbo.draw(0, 0, 720, 480);
+	
     if (showInfo) {
         std::string info = naplps.fileName + "\n";
         info += "Telidon " + ofToString(naplps.version) + ", " + ofToString(naplps.cmds.size()) + " commands\n";

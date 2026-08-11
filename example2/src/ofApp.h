@@ -33,5 +33,7 @@ class ofApp : public ofBaseApp {
         bool progressiveDraw;
         bool labelPoints;
         bool showInfo;
+	
+		ofFbo fbo;
 
 };
